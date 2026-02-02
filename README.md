@@ -1,24 +1,145 @@
-# LLM-Image-text-and-attacks-on-Multi-Modal-FND-models
+# Image-text-and-LLM-attacks-on-Multi-Modal-Fake-News-Detection
+This research evaluates the feasibility and resilience of three multimodal frameworks: (long) BERT-VGG, CNN-VGG, and LSTMVGG, using two benchmark data sets, D1 and RECOVERY. By subjecting these models to diverse adversarial conditions, including ten image-based and five text-based attacks, 2 text based adversarial attacks using LLAMA3
 
-# A Rigorous Interrogation of Multimodal Fake News Detection Paradigms: Adversarial Robustness and Modality Dependence
+# Evaluation Report
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Paper](https://img.shields.io/badge/Paper-Cluster%20Computing-blue)](https://link.to.your.paper.if.available)
+## Without Attack
 
-This repository contains the official source code and experimental pipeline for the paper **"A Rigorous Interrogation of Multimodal Fake News Detection Paradigms: Adversarial Robustness and Modality Dependence"**, published in *Cluster Computing*.
+| Dataset Name | Model Name | Blank Field | Accuracy          | Precision         | Recall            | F1 Score          |
+|--------------|------------|-------------|-------------------|-------------------|-------------------|-------------------|
+| D1           | BertVgg    | none        | 0.9475409836065574| 0.9770491803278688| 0.9226006191950464| 0.9490445859872612|
+| D1           | BertVgg    | text        | 0.9393442622950819| 0.9540983606557377| 0.9267515923566879| 0.9402261712439418|
+| D1           | BertVgg    | img         | 0.5               | 0.0               | 0.0               | 0.0               |
+| D1           | BertVgg    | text+img    | 0.9442622950819672| 0.9672131147540983| 0.9247648902821317| 0.9455128205128205|
+| D1           | CnnVgg     | none        | 0.9868852459016394| 0.9901639344262295| 0.9837133550488599| 0.9869281045751633|
+| D1           | CnnVgg     | text        | 0.9229508196721311| 0.9770491803278688| 0.8816568047337278| 0.926905132192846 |
+| D1           | CnnVgg     | img         | 0.780327868852459 | 0.5770491803278689| 0.9723756906077348| 0.7242798353909465|
+| D1           | CnnVgg     | text+img    | 0.9245901639344263| 0.980327868852459 | 0.8820058997050148| 0.9285714285714286|
+| D1           | LstmVgg    | none        | 0.9295081967213115| 0.9540983606557377| 0.909375          | 0.9312000000000001|
+| D1           | LstmVgg    | text        | 0.6311475409836066| 1.0               | 0.5754716981132075| 0.7305389221556886|
+| D1           | LstmVgg    | img         | 0.5442622950819672| 0.12786885245901639| 0.7647058823529411| 0.21910112359550563|
+| D1           | LstmVgg    | text+img    | 0.6213114754098361| 1.0               | 0.5690298507462687| 0.7253269916765755|
+| RECOVERY     | BertVgg    | none        | 0.979757085020243 | 0.9976190476190476| 0.9789719626168224| 0.9882075471698113|
+| RECOVERY     | BertVgg    | text        | 0.97165991902834  | 0.9857142857142858| 0.981042654028436 | 0.983372921615202 |
+| RECOVERY     | BertVgg    | img         | 0.14979757085020243| 0.0               | 0.0               | 0.0               |
+| RECOVERY     | BertVgg    | text+img    | 0.9696356275303644| 0.9880952380952381| 0.9764705882352941| 0.9822485207100591|
+| RECOVERY     | CnnVgg     | none        | 0.9838056680161943| 0.9928571428571429| 0.9881516587677726| 0.990498812351544 |
+| RECOVERY     | CnnVgg     | text        | 0.9331983805668016| 0.9809523809523809| 0.9427917620137299| 0.9614935822637105|
+| RECOVERY     | CnnVgg     | img         | 0.8582995951417004| 0.8380952380952381| 0.9943502824858758| 0.9095607235142119|
+| RECOVERY     | CnnVgg     | text+img    | 0.9331983805668016| 0.9809523809523809| 0.9427917620137299| 0.9614935822637105|
+| RECOVERY     | LstmVgg    | none        | 0.9251012145748988| 0.9928571428571429| 0.9246119733924612| 0.9575200918484501|
+| RECOVERY     | LstmVgg    | text        | 0.23279352226720648| 0.09761904761904762| 1.0               | 0.17787418655097612|
+| RECOVERY     | LstmVgg    | img         | 0.7834008097165992| 0.7833333333333333| 0.9536231884057971| 0.8601307189542484|
+| RECOVERY     | LstmVgg    | text+img    | 0.23279352226720648| 0.1               | 0.9767441860465116| 0.1814254859611231|
 
-## 📄 Abstract
-This work presents a comprehensive evaluation of canonical and modern Multimodal Fake News Detection (MFND) architectures. We assess the feasibility and robustness of five diverse architectures (**LongBERT-VGG, CNN-VGG, LSTM-VGG, BERT-CLIP, and ViLBERT**) across three benchmark datasets (**D1, RECOVERY, and PolitiFact**). Our analysis subjects these models to an extensive battery of **17 adversarial perturbations**, including 10 image-based attacks and 7 text-based attacks. Crucially, we introduce novel adversarial textual manipulations generated via instruction-tuned **Llama 3 8B** and **DeepSeek-LLM 7B Chat** models.
 
-## 🚀 Key Features
-* [cite_start]**5 Architectures Implemented:** Standard VGG-based late fusion models (with LongBERT/CNN/LSTM) and modern baselines (BERT-CLIP, End-to-End ViLBERT)[cite: 8].
-* **17 Adversarial Attacks:**
-    * [cite_start]**Image:** FGSM, PGD (L2/Linf), MIFGSM, NIFGSM, DIFGSM, Pixle, etc.[cite: 9].
-    * **Text:** TextFooler, TextBugger, HotFlip.
-    * [cite_start]**LLM-Generated:** Novel Semantic and Grammar attacks using fine-tuned **Llama 3** and **DeepSeek**[cite: 10].
-* **Advanced Analysis:**
-    * [cite_start]**Modality Ablation:** Scripts to test model reliance on text-only vs. image-only inputs[cite: 12].
-    * [cite_start]**Black-Box Transferability:** Evaluation of attack transfer between different architectures[cite: 11].
-    * [cite_start]**Explainability:** Grad-CAM visualization scripts to diagnose failure modes (e.g., artifact reliance)[cite: 18].
+## Image Attack
 
-## 📂 Repository Structure
+### FGSM
+
+| Dataset Name | Model Name | Attack Field | Attack Type | Accuracy           | Precision         | Recall            | F1 Score          |
+|--------------|------------|--------------|-------------|--------------------|-------------------|-------------------|-------------------|
+| D1           | BertVgg    | Image        | FGSM        | 0.7983606557377049 | 0.8819672131147541 | 0.7556179775280899 | 0.8139183055975794|
+| RECOVERY     | BertVgg    | Image        | FGSM        | 0.8846153846153846 | 0.9809523809523809 | 0.8937093275488069 | 0.9353007945516458|
+| D1           | CnnVgg     | Image        | FGSM        | 0.9672131147540983 | 0.9672131147540983 | 0.9672131147540983 | 0.9672131147540983|
+| RECOVERY     | CnnVgg     | Image        | FGSM        | 0.97165991902834   | 0.9976190476190476 | 0.9699074074074074 | 0.9835680751173709|
+| D1           | LstmVgg    | Image        | FGSM        | 0.8229508196721311 | 0.8950819672131147 | 0.7822349570200573 | 0.8348623853211009|
+| RECOVERY     | LstmVgg    | Image        | FGSM        | 0.9068825910931174 | 0.9857142857142858 | 0.9118942731277533 | 0.9473684210526316|
+
+
+### FastFGSM
+
+| Dataset Name | Model Name | Attack Field | Attack Type | Accuracy           | Precision         | Recall            | F1 Score          |
+|--------------|------------|--------------|-------------|--------------------|-------------------|-------------------|-------------------|
+| D1           | BertVgg    | Image        | FastFGSM    | 0.8459016393442623 | 0.9442622950819672 | 0.7890410958904109 | 0.8597014925373133|
+| RECOVERY     | BertVgg    | Image        | FastFGSM    | 0.8562753036437247 | 0.9523809523809523 | 0.8869179600886918 | 0.9184845005740527|
+| D1           | CnnVgg     | Image        | FastFGSM    | 0.9721311475409836 | 0.9770491803278688 | 0.9675324675324676 | 0.9722675367047309|
+| RECOVERY     | CnnVgg     | Image        | FastFGSM    | 0.9696356275303644 | 0.9928571428571429 | 0.972027972027972  | 0.9823321554770317|
+| D1           | LstmVgg    | Image        | FastFGSM    | 0.8016393442622951 | 0.9049180327868852 | 0.75              | 0.8202080237741457|
+| RECOVERY     | LstmVgg    | Image        | FastFGSM    | 0.917004048582996  | 0.9857142857142858 | 0.9220489977728286 | 0.952819332566168 |
+
+
+### MIFGSM
+
+| Dataset Name | Model Name | Attack Field | Attack Type | Accuracy           | Precision         | Recall            | F1 Score          |
+|--------------|------------|--------------|-------------|--------------------|-------------------|-------------------|-------------------|
+| D1           | BertVgg    | Image        | MIFGSM      | 0.9065573770491804 | 0.9704918032786886 | 0.8604651162790697 | 0.9121725731895223|
+| RECOVERY     | BertVgg    | Image        | MIFGSM      | 0.7834008097165992 | 0.8785714285714286 | 0.8682352941176471 | 0.8733727810650889|
+| D1           | CnnVgg     | Image        | MIFGSM      | 0.9770491803278688 | 0.9934426229508196 | 0.9619047619047619 | 0.9774193548387097|
+| RECOVERY     | CnnVgg     | Image        | MIFGSM      | 0.9777327935222672 | 0.9904761904761905 | 0.983451536643026  | 0.9869513641755634|
+| D1           | LstmVgg    | Image        | MIFGSM      | 0.7655737704918033 | 0.8754098360655738 | 0.717741935483871  | 0.7887740029542097|
+| RECOVERY     | LstmVgg    | Image        | MIFGSM      | 0.917004048582996  | 0.9857142857142858 | 0.9220489977728286 | 0.952819332566168 |
+
+
+### DIFGSM
+
+| Dataset Name | Model Name | Attack Field | Attack Type | Accuracy           | Precision         | Recall            | F1 Score          |
+|--------------|------------|--------------|-------------|--------------------|-------------------|-------------------|-------------------|
+| D1           | BertVgg    | Image        | DIFGSM      | 0.898360655737705  | 0.9639344262295082 | 0.8521739130434782 | 0.9046153846153846|
+| RECOVERY     | BertVgg    | Image        | DIFGSM      | 0.7854251012145749 | 0.8833333333333333 | 0.866822429906542  | 0.8750000000000001|
+| D1           | CnnVgg     | Image        | DIFGSM      | 0.9754098360655737 | 0.9901639344262295 | 0.9617834394904459 | 0.9757673667205169|
+| RECOVERY     | CnnVgg     | Image        | DIFGSM      | 0.9676113360323887 | 0.9880952380952381 | 0.9741784037558685 | 0.9810874704491725|
+| D1           | LstmVgg    | Image        | DIFGSM      | 0.7557377049180328 | 0.8622950819672132 | 0.7108108108108108 | 0.7792592592592592|
+| RECOVERY     | LstmVgg    | Image        | DIFGSM      | 0.917004048582996  | 0.9833333333333333 | 0.9239373601789709 | 0.9527104959630911|
+
+
+### NIFGSM
+
+
+| Dataset Name | Model Name | Attack Field | Attack Type | Accuracy           | Precision         | Recall            | F1 Score          |
+|--------------|------------|--------------|-------------|--------------------|-------------------|-------------------|-------------------|
+| D1           | BertVgg    | Image        | NIFGSM      | 0.8508196721311475 | 0.921311475409836  | 0.8074712643678161 | 0.8606431852986217|
+| RECOVERY     | BertVgg    | Image        | NIFGSM      | 0.8441295546558705 | 0.9357142857142857 | 0.8871331828442438 | 0.9107763615295481|
+| D1           | CnnVgg     | Image        | NIFGSM      | 0.9688524590163935 | 0.9737704918032787 | 0.9642857142857143 | 0.9690048939641109|
+| RECOVERY     | CnnVgg     | Image        | NIFGSM      | 0.9696356275303644 | 0.9928571428571429 | 0.972027972027972  | 0.9823321554770317|
+| D1           | LstmVgg    | Image        | NIFGSM      | 0.7983606557377049 | 0.8950819672131147 | 0.75               | 0.8161434977578476|
+| RECOVERY     | LstmVgg    | Image        | NIFGSM      | 0.9149797570850202 | 0.9880952380952381 | 0.918141592920354  | 0.9518348623853211|
+
+
+### PGD
+
+| Dataset Name | Model Name | Attack Field | Attack Type | Accuracy           | Precision         | Recall            | F1 Score          |
+|--------------|------------|--------------|-------------|--------------------|-------------------|-------------------|-------------------|
+| D1           | BertVgg    | Image        | PGD         | 0.9049180327868852 | 0.9639344262295082 | 0.8621700879765396 | 0.9102167182662537|
+| RECOVERY     | BertVgg    | Image        | PGD         | 0.7894736842105263 | 0.8809523809523809 | 0.8726415094339622 | 0.8767772511848341|
+| D1           | CnnVgg     | Image        | PGD         | 0.9737704918032787 | 0.9901639344262295 | 0.9587301587301588 | 0.9741935483870968|
+| RECOVERY     | CnnVgg     | Image        | PGD         | 0.979757085020243  | 0.9952380952380953 | 0.9812206572769953 | 0.9881796690307328|
+| D1           | LstmVgg    | Image        | PGD         | 0.7475409836065574 | 0.8491803278688524 | 0.7057220708446866 | 0.7708333333333334|
+| RECOVERY     | LstmVgg    | Image        | PGD         | 0.9109311740890689 | 0.9785714285714285 | 0.92152466367713   | 0.9491916859122401|
+
+
+### PGDL2
+
+| Dataset Name | Model Name | Attack Field | Attack Type | Accuracy           | Precision         | Recall            | F1 Score          |
+|--------------|------------|--------------|-------------|--------------------|-------------------|-------------------|-------------------|
+| D1           | BertVgg    | Image        | PGDL2       | 0.8                | 0.8754098360655738 | 0.7606837606837606 | 0.8140243902439024|
+| RECOVERY     | BertVgg    | Image        | PGDL2       | 0.8866396761133604 | 0.9785714285714285 | 0.8973799126637555 | 0.9362186788154897|
+| D1           | CnnVgg     | Image        | PGDL2       | 0.9655737704918033 | 0.9606557377049181 | 0.9701986754966887 | 0.9654036243822075|
+| RECOVERY     | CnnVgg     | Image        | PGDL2       | 0.9736842105263158 | 0.9976190476190476 | 0.9721577726218097 | 0.9847238542890716|
+| D1           | LstmVgg    | Image        | PGDL2       | 0.8180327868852459 | 0.8819672131147541 | 0.7819767441860465 | 0.8289676425269645|
+| RECOVERY     | LstmVgg    | Image        | PGDL2       | 0.9048582995951417 | 0.9857142857142858 | 0.9098901098901099 | 0.9462857142857144|
+
+
+### PGDRS
+
+| Dataset Name | Model Name | Attack Field | Attack Type | Accuracy           | Precision         | Recall            | F1 Score          |
+|--------------|------------|--------------|-------------|--------------------|-------------------|-------------------|-------------------|
+| D1           | BertVgg    | Image        | PGDRS       | 0.8                | 0.8688524590163934 | 0.7636887608069164 | 0.8128834355828221|
+| RECOVERY     | BertVgg    | Image        | PGDRS       | 0.8846153846153846 | 0.9785714285714285 | 0.8954248366013072 | 0.9351535836177475|
+| D1           | CnnVgg     | Image        | PGDRS       | 0.9688524590163935 | 0.9672131147540983 | 0.9703947368421053 | 0.9688013136288999|
+| RECOVERY     | CnnVgg     | Image        | PGDRS       | 0.9696356275303644 | 0.9976190476190476 | 0.9676674364896074 | 0.9824150058616647|
+| D1           | LstmVgg    | Image        | PGDRS       | 0.8163934426229508 | 0.8786885245901639 | 0.7813411078717201 | 0.8271604938271605|
+| RECOVERY     | LstmVgg    | Image        | PGDRS       | 0.9068825910931174 | 0.9880952380952381 | 0.9100877192982456 | 0.9474885844748858|
+
+
+### PGDRSL2
+
+| Dataset Name | Model Name | Attack Field | Attack Type | Accuracy           | Precision         | Recall            | F1 Score          |
+|--------------|------------|--------------|-------------|--------------------|-------------------|-------------------|-------------------|
+| D1           | BertVgg    | Image        | PGDRSL2     | 0.7967213114754098 | 0.8688524590163934 | 0.7593123209169055 | 0.8103975535168196|
+| RECOVERY     | BertVgg    | Image        | PGDRSL2     | 0.888663967611336  | 0.9785714285714285 | 0.899343544857768  | 0.9372862029646523|
+| D1           | CnnVgg     | Image        | PGDRSL2     | 0.9655737704918033 | 0.9639344262295082 | 0.9671052631578947 | 0.9655172413793103|
+| RECOVERY     | CnnVgg     | Image        | PGDRSL2     | 0.97165991902834   | 0.9976190476190476 | 0.9699074074074074 | 0.9835680751173709|
+| D1           | LstmVgg    | Image        | PGDRSL2     | 0.8180327868852459 | 0.8852459016393442 | 0.7803468208092486 | 0.8294930875576038|
+| RECOVERY     | LstmVgg    | Image        | PGDRSL2     | 0.9048582995951417 | 0.9857142857142858 | 0.9098901098901099 | 0.9462857142857144|
+
